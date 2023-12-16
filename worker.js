@@ -3197,7 +3197,7 @@ function replaceSS(link, replacements, isRecovery) {
 function replaceTrojan(link, replacements, isRecovery) {
   const randomUUID = generateRandomUUID();
   const randomDomain = generateRandomStr(10) + ".com";
-  const regexMatch = link.match(/(vless|trojan):\/\/(.*?)@(.*):/);
+  const regexMatch = link.match(/(vless|trojan):\/\/(.*?)@(.*?):/);
   if (!regexMatch) {
     return;
   }
