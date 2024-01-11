@@ -2993,7 +2993,7 @@ var src_default = {
         } else {
           parsedObj = parseData(url2);
         }
-        if (/^(ssr?|vmess1?|trojan|vless|hysteria|hysteria2):\/\//.test(url2)) {
+        if (/^(ssr?|vmess1?|trojan|vless|hysteria|hysteria2|tg):\/\//.test(url2)) {
           const newLink = replaceInUri(url2, replacements, false);
           if (newLink)
             replacedURIs.push(newLink);
@@ -3069,10 +3069,17 @@ function replaceInUri(link, replacements, isRecovery) {
       return replaceHysteria(link, replacements);
     case link.startsWith("hysteria2://"):
       return replaceHysteria2(link, replacements, isRecovery);
+    case link.startsWith("tg://"):
+      return replacetg(link, replacements, isRecovery);
     default:
       return;
   }
 }
+
+function replacetg(link, replacements, isRecovery) {
+  return link;
+}
+
 function replaceSSR(link, replacements, isRecovery) {
   link = link.slice("ssr://".length).replace("\r", "").split("#")[0];
   link = urlSafeBase64Decode(link);
