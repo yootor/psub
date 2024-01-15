@@ -2952,8 +2952,21 @@ var src_default = {
     }
 
     const urlParam = url.searchParams.get("url");
-    if (!urlParam)
-      return new Response("Missing URL parameter", { status: 400 });
+    if (!urlParam) {
+      if (url.pathname === '/version') {
+        const version = await fetch(`${backend}/version`);
+        const versionText = await version.text();
+        return new Response(versionText, {
+          status: 200,
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+          },
+        });
+      } else {
+        return new Response("Missing URL parameter", { status: 400 });
+      }
+    }
     const backendParam = url.searchParams.get("bd");
     if (backendParam && /^(https?:\/\/[^/]+)[.].+$/g.test(backendParam))
       backend = backendParam.replace(/(https?:\/\/[^/]+).*$/, "$1");
